@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Price</title>
+    <style>
+       body{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+       }
+       .container {
+        width: 300px;
+        height: 450px;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+       }
+       #price{   
+        height: 65px;     
+        padding: 5px 10px;
+        border-radius: 0 0 10px 10px;
+        font-size: 30px;
+        color: #fff;
+        background-color: #CA7E40;
+       }
+       #btn{
+        margin-top: 35px;
+           padding: 10px 15px;
+           font-size: 20px;
+           background-color: #333;
+           color: #fff;
+           border: none;
+           border-radius: 5px;
+           cursor: pointer;
+       }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bitcoin price</h1>
+        <img id = "Bitcoin" src="bitcoin.png"/>  
+        <div id ="price"></div>  
+        <button id="btn">Refresh To Get Actual Price</button>    
+    </div>
+   
+    <script>
+        let btn = document.getElementById("btn");
+        let span = document.getElementById("price");
+        btn.addEventListener("click", function(){
+            let displayBitcoin = new XMLHttpRequest();
+
+            displayBitcoin.onreadystatechange = function() {
+                if(displayBitcoin.readyState == 4 && displayBitcoin.status == 200){
+                   let data = JSON.parse(displayBitcoin.responseText);
+                   data = data.bpi.USD.rate;
+                   price.textContent = "Bitcoin actual price: $" + data;
+                   
+                };
+            }
+            displayBitcoin.open("GET", "https://api.coindesk.com/v1/bpi/currentprice.json");
+            displayBitcoin.send();
+        });       
+    </script>
+</body>
+</html>
